@@ -1,6 +1,15 @@
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Environment Variables
+
+You could add them in a .env file
+
+REACT_APP_GOOGLE_OAUTH_CLIENT_ID={Google oauth client id, get from console.cloud.google.com}
+REACT_APP_SANITY_PROJECT_ID={sanity project id}
+REACT_APP_SANITY_TOKEN={sanity token}
 
 ## Available Scripts
 
