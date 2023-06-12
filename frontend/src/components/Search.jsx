@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 
 import MasonryLayout from './MasonryLayout'
-import {client, getFeedQuery, getSearchQuery} from '../sanity'
+import {client, getSearchQuery} from '../sanity'
 import Spinner from './Spinner'
 
 const Search = ({ searchTerm }) => {

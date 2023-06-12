@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {MdDownloadForOffline} from 'react-icons/md'
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { v4 as uuidv4} from 'uuid'
 
 import {client, urlFor, getPinDetailQuery, getRelatedPinsQuery} from '../sanity'
@@ -15,7 +15,7 @@ const PinDetail = ({user}) => {
     const [addingComment, setAddingComment] = useState(false)
     const {pinId} = useParams()
 
-    const fetchPinDetails = async () => {
+    const fetchPinDetails = async (pinId) => {
         const query = getPinDetailQuery(pinId)
         const data = await client.fetch(query)
 
@@ -50,7 +50,7 @@ const PinDetail = ({user}) => {
                 }])
                 .commit()
 
-            fetchPinDetails()
+            fetchPinDetails(pinId)
             setComment('')
         } finally {
             setAddingComment(false)
@@ -58,7 +58,7 @@ const PinDetail = ({user}) => {
     }
 
     useEffect(() => {
-        fetchPinDetails()
+        fetchPinDetails(pinId)
     }, [pinId])
 
     if (!pinDetails) {
@@ -72,6 +72,7 @@ const PinDetail = ({user}) => {
                 <img
                     className='rounded-lg'
                     src={urlFor(pinDetails.image).url()}
+                    alt='pin-pic'
                 />
             </div>
             <div className='w-full p-5 flex-1 xl:min-width-620'>
