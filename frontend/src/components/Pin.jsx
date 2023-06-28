@@ -17,10 +17,10 @@ const Pin = ({pin}) => {
         ? JSON.parse(localStorage.getItem('user'))
         : null
 
-    const alreadySaved = !!(pin.save?.find(item => item?.postedBy._id === user._id))
+    const alreadySaved = !!(pin.save?.find(item => item?.postedBy._id === user?._id))
 
     const savePin = async () => {
-        if (alreadySaved || savingPost) {
+        if (alreadySaved || savingPost || !user) {
             return
         }
 
@@ -106,7 +106,7 @@ const Pin = ({pin}) => {
                                     </span>
                                 </a>
                             )}
-                            {pin.postedBy?._id === user._id && (
+                            {pin.postedBy?._id === user?._id && (
                                 <button
                                     type='button'
                                     className='bg-white p-2 opacity-70 hover:opacity-100 font-bold text-dark text-base rounded-3xl hover:shadow-md outline-none'
