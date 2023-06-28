@@ -16,6 +16,11 @@ const App = () => {
         const userId = localStorage.getItem('userId') || null
 
         if (!userId) {
+            setUserContext({
+                user: null,
+                loading: false
+            })
+
             return
         }
 
