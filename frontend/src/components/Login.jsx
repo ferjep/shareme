@@ -1,6 +1,5 @@
 import React from 'react'
 import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google'
-import { useNavigate } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
 import { client, createUser } from '../sanity'
 
@@ -8,8 +7,6 @@ import shareVideo from '../assets/share.mp4'
 import logo from '../assets/logowhite.png'
 
 const Login = () => {
-    const navigate = useNavigate()
-
     const handleGoogle = async (response) => {
         const decodedResponse = jwtDecode(response.credential)
         const { name, sub: googleId, picture: imageUrl } = decodedResponse
@@ -17,9 +14,9 @@ const Login = () => {
         const user = createUser(googleId, name, imageUrl)
 
         const userDoc = await client.createIfNotExists(user)
-        localStorage.setItem('user', JSON.stringify(userDoc))
+        localStorage.setItem('userId', userDoc._id)
 
-        navigate('/', {replace: true})
+        window.location.replace('/')
     }
 
     return (

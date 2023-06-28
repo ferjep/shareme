@@ -1,34 +1,37 @@
-import React, {useState, useRef, useEffect} from 'react'
+import React, {useState, useRef, useEffect, useContext} from 'react'
 import {HiMenu} from 'react-icons/hi'
 import {AiFillCloseCircle} from 'react-icons/ai'
-import {Link, Route, Routes} from 'react-router-dom'
+import {Link, Route, Routes, useNavigate} from 'react-router-dom'
 
 import Pins from './Pins'
 import {Sidebar, UserProfile} from '../components'
-import {client, getUserQuery} from '../sanity'
 import logo from '../assets/logo.png'
+import { UserContext } from '../context'
+import Spinner from '../components/Spinner'
 
 const Home = () => {
     const [toggleSidebar, setToggleSidebar] = useState(false)
-    const [user, setUser] = useState(null)
+    const {user, loading: userLoading} = useContext(UserContext)
     const scrollRef = useRef(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
-        const userLocalStorage = localStorage.getItem('user')
-            ? JSON.parse(localStorage.getItem('user'))
-            : null
-
-        if (userLocalStorage && typeof userLocalStorage === 'object') {
-            const query = getUserQuery(userLocalStorage._id)
-
-            client.fetch(query)
-                .then(data => setUser(data[0]))
+        if (!user && !userLoading) {
+            navigate('/login', {replace: true})
         }
-    }, [])
+    }, [user, userLoading, navigate])
 
     useEffect(() => {
-        scrollRef.current.scrollTo(0, 0)
+        scrollRef.current?.scrollTo(0, 0)
     }, [])
+
+    if (!user) {
+        return (
+            <div className='h-screen'>
+                <Spinner />
+            </div>
+        )
+    }
 
     return (
         <div className='flex bg-gray-50 md:flex-row flex-col h-screen transaction-height ease-out'>

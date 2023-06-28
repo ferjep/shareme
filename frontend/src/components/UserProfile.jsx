@@ -1,7 +1,7 @@
 import { googleLogout } from '@react-oauth/google'
 import React, {useState, useEffect } from 'react'
 import {AiOutlineLogout} from 'react-icons/ai'
-import {useParams, useNavigate} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import {client, getUserQuery, getUserSavedPinsQuery, getUserCreatedPinsQuery} from '../sanity'
 import MasonryLayout from './MasonryLayout'
 import ProfilePinsBtn from './ProfilePinsBtn'
@@ -14,8 +14,6 @@ const UserProfile = () => {
     const [pins, setPins] = useState(null)
     const [activeBtn, setActiveBtn] = useState('created')
     const {userId} = useParams()
-
-    const navigate = useNavigate()
 
     useEffect(() => {
         const query = getUserQuery(userId)
@@ -44,8 +42,8 @@ const UserProfile = () => {
 
     const doLogout = () => {
         googleLogout()
-        localStorage.clear('user')
-        navigate('/login')
+        localStorage.clear('userId')
+        window.location.replace('/login')
     }
 
     return (

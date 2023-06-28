@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import {MdDownloadForOffline} from 'react-icons/md'
@@ -7,15 +7,13 @@ import {BsFillArrowUpRightCircleFill} from 'react-icons/bs'
 
 import {client, urlFor} from '../sanity'
 import UserLink from './UserLink'
+import { UserContext } from '../context'
 
 const Pin = ({pin}) => {
     const [postHovered, setPostHovered] = useState(false)
     const [savingPost, setSavingPost] = useState(false)
+    const {user} = useContext(UserContext)
     const navigate = useNavigate()
-
-    const user = localStorage.getItem('user')
-        ? JSON.parse(localStorage.getItem('user'))
-        : null
 
     const alreadySaved = !!(pin.save?.find(item => item?.postedBy._id === user?._id))
 
